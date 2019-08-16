@@ -241,9 +241,9 @@ new Vue({
   });
 ```
 
-#### 父子传值
+### 父子组件传值
 
-1. [子组件共享父组件的数据和方法](./examples/demo14.html)
+#### [子组件共享父组件的数据和方法](./examples/demo14.html)
 
 ```
 在子组件中可以通过 this.$parent 拿到父组件的内部属性
@@ -261,6 +261,60 @@ new Vue({
     template: `
       <div>
         <my-el/>
+      </div>
+    `,
+    data: {
+      text: "Hello World !"
+    }
+  });
+```
+
+#### Prop 父组件向子组件传值
+
+1. v-bind 指令
+
+```
+   v-bind 指令可以用于data对象参数绑定，此功能可以替代直接在HTML标签赋值的行为
+
+   示例：
+
+   原始写法： <h1>Hello World !</h1>
+
+   v-bind写法：<h1 v-bind:text="text"/>
+```
+
+2. props 属性
+
+子组件的 props 属性可以拿到父组件给自己传递的属性值
+
+```
+   示例：
+   Vue.component("my-el", {
+     props: ["text"],
+     template: "<h1>{{text}}</h1>"
+   });
+   let vue = new Vue({
+     el: "#root",
+     template: `
+       <div>
+         <my-el text="Hello World !"/>
+       </div>
+     `,
+   });
+```
+
+3. [综合实例](./examples/demo15.html)
+
+```
+  Vue.component("my-el", {
+    props: ["text"],
+    template: "<h1>{{text}}</h1>"
+  });
+  let vue = new Vue({
+    el: "#root",
+    template: `
+      <div>
+        <my-el v-bind:text="text"/>
       </div>
     `,
     data: {
