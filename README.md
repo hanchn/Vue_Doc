@@ -211,11 +211,9 @@ new Vue({
 });
 ```
 
-#### 组件拆分
+#### [创建自定义组件](./examples/demo13.html)
 
 以上实例只是在顶级组件中挂在 HTML，不利于维护，我们下面将介绍如何拆分组件
-
-1. 创建自定义组件
 
 ```
 
@@ -240,5 +238,33 @@ new Vue({
         <my-el/>
       </div>
     `
+  });
+```
+
+#### 父子传值
+
+1. [子组件共享父组件的数据和方法](./examples/demo14.html)
+
+```
+在子组件中可以通过 this.$parent 拿到父组件的内部属性
+
+  Vue.component("my-el", {
+    template: "<h1>{{text}}</h1>",
+    data: function() {
+      return {
+        text: this.$parent.text
+      };
+    }
+  });
+  let vue = new Vue({
+    el: "#root",
+    template: `
+      <div>
+        <my-el/>
+      </div>
+    `,
+    data: {
+      text: "Hello World !"
+    }
   });
 ```
