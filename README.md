@@ -322,3 +322,21 @@ new Vue({
     }
   });
 ```
+
+### 关于项目构建
+
+1. [官方脚手架](https://cli.vuejs.org/)
+
+```
+安装CLI工具：
+
+npm install -g @vue/cli
+# OR
+yarn global add @vue/cli
+
+创建项目：
+
+vue create 项目名
+```
+
+2. 自己搭建脚手架
