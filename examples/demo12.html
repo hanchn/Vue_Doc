@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+<script src="./js/vue.js"></script>
+<script>
+  new Vue({
+    el: "#root",
+    template: `<ul>
+        <li v-for="item in list" :key='item.id'>{{item.text}}</li>
+    </ul>`,
+    data: {
+      list: [
+        { id: 0, text: "测试001" },
+        { id: 1, text: "测试002" },
+        { id: 2, text: "测试003" },
+        { id: 3, text: "测试004" },
+        { id: 4, text: "测试005" },
+        { id: 5, text: "测试006" },
+        { id: 6, text: "测试007" },
+        { id: 7, text: "测试008" },
+        { id: 8, text: "测试009" },
+        { id: 9, text: "测试0010" },
+        { id: 10, text: "测试0011" },
+        { id: 11, text: "测试0012" },
+        { id: 12, text: "测试0013" },
+        { id: 13, text: "测试0014" },
+        { id: 14, text: "测试0015" },
+        { id: 15, text: "测试0016" }
+      ]
+    }
+  });
+</script>
