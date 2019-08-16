@@ -354,3 +354,25 @@ vue create 项目名
 ```
 待续...
 ```
+
+注\* 在自己进行脚手架搭建的时候，可能会出现报错情况，报错消息如下：
+
+```
+vue.runtime.esm.js?7c52:619 [Vue warn]: You are using the runtime-only build of Vue where
+the template compiler is not available. Either pre-compile the templates into render functions,
+ or use the compiler-included build.
+```
+
+上述问题是因为正在使用的是 vue 的运行时版本，而此版本中的编译器时不可用的，我们需要把它切换成运行时 + 编译的
+版本，[官方介绍](https://cn.vuejs.org/v2/guide/installation.html#%E8%BF%90%E8%A1%8C%E6%97%B6-%E7%BC%96%E8%AF%91%E5%99%A8-vs-%E5%8F%AA%E5%8C%85%E5%90%AB%E8%BF%90%E8%A1%8C%E6%97%B6)
+
+```
+resolve:{
+        alias:{
+            'vue$':'vue/dist/vue.js'
+        }
+    }
+}
+```
+
+#### template
