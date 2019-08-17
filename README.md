@@ -325,6 +325,8 @@ new Vue({
 
 ### 关于项目构建
 
+如果各位朋友想要快速入门 Vue，请直接使用官方脚手架进行项目构建，快速学习。
+
 1. [官方脚手架](https://cli.vuejs.org/)
 
 官方脚手架是依赖 Vue 环境、通过 webpack 构建
@@ -339,6 +341,21 @@ yarn global add @vue/cli
 创建项目：
 
 vue create 项目名
+
+启动服务：
+
+npm run start
+
+#OR
+
+yarn start
+
+项目目录：
+
+我们只需要关注安装后的src目录，即我们的开发目录
+
+src的main方法是我们的主方法，我们可以把里面的代码清空，并将我们现有的代码复制进去进行运行编译。
+
 ```
 
 注\* 因为官方的脚手架工具依赖的 Node.js 版本和 webpack 版本不一定和自己电脑的版本一致，可能会导
@@ -375,8 +392,85 @@ resolve:{
 }
 ```
 
-### template
+```
+注* 从本处以下的教程依赖于项目进行讲解，代码示例依赖于运行的项目，请用Vue-CLI构建项目，在项目中进行运行。
+```
+
+### \$mount 挂载
 
 ```
-待续...
+我们在上文用的到挂在方式是直接在示例里面传入挂载的，我们也可以使用以下方式进行实例挂载：
+
+import Vue from "vue";
+Vue.component("App", {
+  template: `
+   <h1>Hello World !</h1>
+  `
+});
+
+new Vue({
+  template: "<App/>"
+}).$mount("#app");
+
+```
+
+### Vue 模板
+
+```
+在进行Vue的开发过程中，如果只能用字符串的形式进行模板定义，会非常不便于快速项目开发和问题定位。
+Vue提供了一种开发模板，即.vue后缀的文件，我们可以在里面用HTML语法直接进行模板开发。
+
+文件格式例如： app.vue
+<template>  // 组件内容用template包裹
+  <h1>Hello World !</h1>
+</template>
+<script>
+export default {  // 用export暴露组件
+  name: 'App'  //定义组件名
+};
+</script>
+
+
+我们可以直接在main.js中进行引用，引用示例：
+
+new Vue({
+  template: "<App/>",  //使用定义好的模板格式
+  components: {
+    App   // 在组件中引用定义好的组件模块
+  }
+}).$mount("#app");
+
+
+```
+
+### 插槽
+
+插槽解决了页面未渲染时无内容的尴尬，可以用于预渲染处理
+
+1. 无名/不具名插槽
+
+不具名插槽在同一作用域内只能设置一个，用于内容替换
+
+```
+  Vue.component("my-button", {
+    template: `
+      <h1>
+         <slot>loading...</slot>
+      </h1>
+    `
+  });
+  let vue = new Vue({
+    el: "#root",
+    template: `
+        <my-button>
+          Hello World !
+        </my-button>
+    `
+  });
+```
+
+2. 其他插槽
+
+```
+暂未更新
 ```
