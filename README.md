@@ -446,6 +446,26 @@ new Vue({
 
 ```
 
+#### 组件单例
+
+组件内的数据可以直接渲染并使用
+
+```
+<template>
+  <h1>{{text}}</h1>
+</template>
+<script>
+export default {
+  name: "App",
+  data: function() {
+    return {
+      text: "Hello World !"
+    };
+  }
+};
+</script>
+```
+
 ### 生命周期
 
 ### 路由
