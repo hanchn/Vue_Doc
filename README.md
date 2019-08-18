@@ -599,14 +599,20 @@ import Vuex from 'vuex'
 我们需要一个共享的数据树，通过修改公共的数据树来达到：改动一处，多处自动渲染的目的。
 ```
 
-3. vuex 功能拆分
+#### vuex 功能拆分
 
 ```
-1. store // 共享数据树
-2. getter // 数据过滤器
-3. mutation // 修改数据
-4. Action // 提交mutation
-5. Module // 拆分store 让组件与组件间的界限更明确
+1. 在Vue中挂载Vuex
+
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+```
+
+```
+2. 创建组件数据模块
+
+
 ```
 
 ### 插槽
