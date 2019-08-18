@@ -610,9 +610,28 @@ Vue.use(Vuex)
 ```
 
 ```
+
 2. 创建组件数据模块
 
+Vuex提供一个内部属性类 Store 用于创建公共数据树，Store的实例接收并合并各个组件的数据单例模块
 
+import Vuex, {Store} from 'vuex'
+let store = new Store({
+  mudules: null,
+
+})
+```
+
+```
+3. 创建组件单例
+
+组件单例包含如下几个属性：
+
+  a. state,  // 组件的初始化数据/结构
+  b. getters, // 针对数据的（格式/结构等）过滤处理的方法
+  c. mutations // 针对数据做（增删改查）处理
+  d. actions, // 用户行为，根据传入参数进行mutations方法调用，不直接修改数据
+  e. namespaced // namespaced 把 getter、mutation 和 action 都做了真正的模块化，使得 store 可以使用特定模块的 mutation 等
 ```
 
 ### 插槽
