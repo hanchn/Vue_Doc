@@ -471,7 +471,70 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 ```
 
-3. 在 Vue 示例中挂载路由
+3. 为路由挂载不同的页面内容
+
+```
+VueRouter实例暴露一个routes属性用于接受路由配置，路由配置分别有:
+
+1. path 跳转地址
+2. default 默认显示的地址
+3. name 路由别名
+4. component 组件
+5. children 组路由
+...
+
+const Home = { template: "<div>This is Home</div>" };
+const OtherPage = { template: "<div>This is OtherPage</div>" };
+
+const router = new VueRouter({
+  routes: [
+    { path: "/", name: "home", component: Home },  // 为不同的地址 挂载不同的组件
+    { path: "/otherpage", name: "otherpage", component: OtherPage }
+  ]
+});
+```
+
+4. router-link
+
+```
+router-link 用于进行不同页面的跳转，在渲染时会自动变成a链接，router-link可以根据路由的别名
+进行不同页面的跳转。
+
+示例：
+
+new Vue({
+  router,
+  template: `
+  <div id="app">
+      <ul>
+        <li><router-link :to="{ name: 'home' }">home</router-link></li> // router-link组件最后会生成 a标签
+        <li><router-link :to="{ name: 'otherpage' }">otherPage</router-link></li>
+      </ul>
+  </div>
+  `
+}).$mount("#app");
+```
+
+5. router-view
+
+```
+用于路由内容显示，根据router-link的跳转显示不同内容
+
+new Vue({
+  router,
+  template: `
+  <div id="app">
+      <ul>
+        <li><router-link :to="{ name: 'home' }">home</router-link></li> // router-link组件最后会生成 a标签
+        <li><router-link :to="{ name: 'otherpage' }">otherPage</router-link></li>
+      </ul>
+      <router-view class="view"></router-view>  // 组件容器，用于显示不同的路由跳转内容
+  </div>
+  `
+}).$mount("#app");
+```
+
+6. 完整示例
 
 ```
 Vue实例中通过router属性进行路由挂载
