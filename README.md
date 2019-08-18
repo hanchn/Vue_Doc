@@ -433,6 +433,9 @@ export default {  // 用export暴露组件
 
 我们可以直接在main.js中进行引用，引用示例：
 
+import Vue from "vue";
+import App from "./app.vue";
+
 new Vue({
   template: "<App/>",  //使用定义好的模板格式
   components: {
@@ -441,6 +444,66 @@ new Vue({
 }).$mount("#app");
 
 
+```
+
+### 路由
+
+路由用于页面多页面跳转，历史页面回退等
+
+1. 安装路由模板
+
+```
+路由模块很多，我们在本次教程中用到的路由模板是vue-router
+
+安装：
+
+npm install vue-router
+```
+
+2. Vue 路由功能拓展
+
+```
+Vue可以通过use方法拓展功能，例如拓展一个路由插件：
+
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+```
+
+3. 在 Vue 示例中挂载路由
+
+```
+Vue实例中通过router属性进行路由挂载
+
+import Vue from "vue";
+import VueRouter from "vue-router";
+
+Vue.use(VueRouter);  //挂载路由
+
+const Home = { template: "<div>This is Home</div>" };
+const OtherPage = { template: "<div>This is OtherPage</div>" };
+
+const router = new VueRouter({
+  routes: [
+    { path: "/", name: "home", component: Home },  // 为不同的地址 挂载不同的组件
+    { path: "/otherpage", name: "otherpage", component: OtherPage }
+  ]
+});
+
+new Vue({
+  router,
+  template: `
+  <div id="app">
+      <p>当前访问的页面是: {{ $route.name }}</p>
+      <ul>
+        <li><router-link :to="{ name: 'home' }">home</router-link></li> // router-link组件最后会生成 a标签
+        <li><router-link :to="{ name: 'otherpage' }">otherPage</router-link></li>
+      </ul>
+      <router-view class="view"></router-view>  // 组件容器，用于显示不同的路由跳转内容
+  </div>
+  `
+}).$mount("#app");
 ```
 
 ### 插槽
