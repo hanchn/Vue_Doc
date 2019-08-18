@@ -628,7 +628,7 @@ let store = new Store({
 组件单例包含如下几个属性：
 
   a. state,  // 组件的初始化数据/结构
-  b. getters, // 针对数据的（格式/结构等）过滤处理的方法
+  b. getters, // 纯数据引用，并针对数据做出部分过滤行为
   c. mutations // 针对数据做（增删改查）处理
   d. actions, // 用户行为，根据传入参数进行mutations方法调用，不直接修改数据
   e. namespaced // namespaced 把 getter、mutation 和 action 都做了真正的模块化，使得 store 可以使用特定模块的 mutation 等
