@@ -778,7 +778,11 @@ let store = new Store({
 
 ```
 
+<<<<<<< HEAD
 8. 在Vue实例中挂载Store
+=======
+8. 在Vue实例中挂在Store
+>>>>>>> 46a7557b14b257449959fa454613152c27b742ab
 
 ```
 import Vue from "vue";
