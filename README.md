@@ -621,38 +621,203 @@ import Vuex from 'vuex'
 
 #### vuex 功能拆分
 
-```
+
 1. 在Vue中挂载Vuex
 
+```
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
 ```
 
-```
 
 2. 创建组件数据模块
 
 Vuex提供一个内部属性类 Store 用于创建公共数据树，Store的实例接收并合并各个组件的数据单例模块
 
+```
+import Vuex, {Store} from 'vuex'
+let store = new Store({})
+
+Store 实例内部接收一个对象，对象属性分别为：
+
+a. state,  // 组件的初始化数据/结构
+b. getters, // 纯数据引用，并针对数据做出部分过滤行为
+c. mutations // 针对数据做（增删改查）处理
+d. actions, // 用户行为，根据传入参数进行mutations方法调用，不直接修改数据
+
+```
+3. state
+
+```
+state 用于初始化页面数据绑定
+
+例如：
+
 import Vuex, {Store} from 'vuex'
 let store = new Store({
-  mudules: null,
-
+  state: {
+    text: 'Hello World !',
+    list: [
+      id: 0, text: '测试数据0',
+      id: 1, text: '测试数据1',
+      id: 2, text: '测试数据2',
+    ]
+  }
 })
 ```
 
-```
-3. 创建组件单例
+4. getters
 
-组件单例包含如下几个属性：
-
-  a. state,  // 组件的初始化数据/结构
-  b. getters, // 纯数据引用，并针对数据做出部分过滤行为
-  c. mutations // 针对数据做（增删改查）处理
-  d. actions, // 用户行为，根据传入参数进行mutations方法调用，不直接修改数据
-  e. namespaced // namespaced 把 getter、mutation 和 action 都做了真正的模块化，使得 store 可以使用特定模块的 mutation 等
 ```
+用于纯引用数据过滤
+
+例如：
+
+import Vuex, {Store} from 'vuex'
+let store = new Store({
+  state: {
+    text: 'Hello World !',
+    list: [
+      id: 0, text: '测试数据0',
+      id: 1, text: '测试数据1',
+      id: 2, text: '测试数据2',
+    ]
+  },
+  getters: {
+    filterList: state => state.list.filter(li => li.id < 2)
+  }
+})
+```
+
+5. mutations
+
+```
+针对state数据的状态变更，针对state做增删改查的操作
+
+例如：
+
+import Vuex, {Store} from 'vuex'
+let store = new Store({
+  state: {
+    count: 0,
+    text: 'Hello World !',
+    list: [
+      id: 0, text: '测试数据0',
+      id: 1, text: '测试数据1',
+      id: 2, text: '测试数据2',
+    ]
+  },
+  getters: {
+    filterList: state => state.list.filter(li => li.id < 2)
+  },
+  mutations: {
+    increment (state) {
+      // 变更状态
+      state.count++
+    }
+  }
+})
+
+mutations中的函数无法直接被使用，类似于函数/事件注册，需要利用特定的方式去进行触发
+```
+
+6. mutations事件触发
+
+无参
+
+```
+store提供一个commit函数属性用于触发已经注册的mutations函数
+
+例如：
+
+store.commit('increment')
+```
+
+有参
+
+```
+例如：
+
+store.commit('increment', ...args)
+```
+
+7. actions
+
+```
+actions用于暴露外部可调用的事件，间接调用/触发mutations
+
+例如： 
+
+import Vuex, {Store} from 'vuex'
+let store = new Store({
+  state: {
+    count: 0,
+    text: 'Hello World !',
+    list: [
+      id: 0, text: '测试数据0',
+      id: 1, text: '测试数据1',
+      id: 2, text: '测试数据2',
+    ]
+  },
+  getters: {
+    filterList: state => state.list.filter(li => li.id < 2)
+  },
+  mutations: {
+    increment (state) {
+      // 变更状态
+      state.count++
+    }
+  },
+  actions: {
+    increment({commit}){
+      commit('increment')
+    }
+  }
+})
+
+```
+
+8. 在Vue实例中挂载Store
+
+```
+import Vue from "vue";
+import Vuex, {Store} from 'vuex';
+
+Vue.use(Vuex);
+
+let store = new Store({
+  state: {
+    count: 0,
+    text: 'Hello World !',
+    list: [
+      id: 0, text: '测试数据0',
+      id: 1, text: '测试数据1',
+      id: 2, text: '测试数据2',
+    ]
+  },
+  getters: {
+    filterList: state => state.list.filter(li => li.id < 2)
+  },
+  mutations: {
+    increment (state) {
+      // 变更状态
+      state.count++
+    }
+  },
+  actions: {
+    increment({commit}){
+      commit('increment')
+    }
+  }
+})
+
+new Vue({
+  store
+}).$mount('#app');
+```
+
+
 
 ### 插槽
 
