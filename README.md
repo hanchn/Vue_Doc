@@ -621,15 +621,15 @@ import Vuex from 'vuex'
 
 #### vuex 功能拆分
 
-```
+
 1. 在Vue中挂载Vuex
 
+```
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
 ```
 
-```
 
 2. 创建组件数据模块
 
