@@ -778,6 +778,45 @@ let store = new Store({
 
 ```
 
+8. 在Vue实例中挂在Store
+
+```
+import Vue from "vue";
+import Vuex, {Store} from 'vuex';
+
+Vue.use(Vuex);
+
+let store = new Store({
+  state: {
+    count: 0,
+    text: 'Hello World !',
+    list: [
+      id: 0, text: '测试数据0',
+      id: 1, text: '测试数据1',
+      id: 2, text: '测试数据2',
+    ]
+  },
+  getters: {
+    filterList: state => state.list.filter(li => li.id < 2)
+  },
+  mutations: {
+    increment (state) {
+      // 变更状态
+      state.count++
+    }
+  },
+  actions: {
+    increment({commit}){
+      commit('increment')
+    }
+  }
+})
+
+new Vue({
+  store
+}).$mount('#app');
+```
+
 
 
 ### 插槽
