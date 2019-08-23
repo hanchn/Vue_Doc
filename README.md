@@ -621,8 +621,7 @@ import Vuex from 'vuex'
 
 #### vuex 功能拆分
 
-
-1. 在Vue中挂载Vuex
+1. 在 Vue 中挂载 Vuex
 
 ```
 import Vuex from 'vuex'
@@ -630,10 +629,9 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 ```
 
-
 2. 创建组件数据模块
 
-Vuex提供一个内部属性类 Store 用于创建公共数据树，Store的实例接收并合并各个组件的数据单例模块
+Vuex 提供一个内部属性类 Store 用于创建公共数据树，Store 的实例接收并合并各个组件的数据单例模块
 
 ```
 import Vuex, {Store} from 'vuex'
@@ -647,6 +645,7 @@ c. mutations // 针对数据做（增删改查）处理
 d. actions, // 用户行为，根据传入参数进行mutations方法调用，不直接修改数据
 
 ```
+
 3. state
 
 ```
@@ -722,7 +721,7 @@ let store = new Store({
 mutations中的函数无法直接被使用，类似于函数/事件注册，需要利用特定的方式去进行触发
 ```
 
-6. mutations事件触发
+6. mutations 事件触发
 
 无参
 
@@ -747,7 +746,7 @@ store.commit('increment', ...args)
 ```
 actions用于暴露外部可调用的事件，间接调用/触发mutations
 
-例如： 
+例如：
 
 import Vuex, {Store} from 'vuex'
 let store = new Store({
@@ -778,11 +777,7 @@ let store = new Store({
 
 ```
 
-<<<<<<< HEAD
-8. 在Vue实例中挂载Store
-=======
-8. 在Vue实例中挂在Store
->>>>>>> 46a7557b14b257449959fa454613152c27b742ab
+8. 在 Vue 实例中挂载 Store
 
 ```
 import Vue from "vue";
@@ -821,7 +816,168 @@ new Vue({
 }).$mount('#app');
 ```
 
+9. 拆分 state module
 
+```
+Store 实例可以接收并合并多个数据模块
+
+例如：
+
+数据模块文件一  data1.js
+
+export default {
+  state: {},
+  getters: {},
+  mutations: {},
+  actions:{}
+}
+
+数据模块文件二  data2.js
+
+export default {
+  state: {},
+  getters: {},
+  mutations: {},
+  actions:{}
+}
+
+在实例中传递多个数据模块
+
+new Store({
+  modules: {
+    data1,
+    data2,
+  }
+})
+```
+
+10. 关于数据的命名空间
+
+```
+我们在调用数据的时候，存在一个数据模块区别调用的问题，我们可以通过为数据模块添加命名空间，
+来区分不同的数据模块。
+
+例如：
+
+数据模块文件 datas.js
+
+export default {
+  state: {},
+  getters: {},
+  mutations: {},
+  actions:{},
+  namespaced: true // 设置模块区分
+}
+```
+
+11. 在项目中绑定 store
+
+```
+
+let store = new Store({
+  modules: {
+    ...datas
+  }
+})
+
+new Vue({
+  store
+})
+```
+
+12. 在组件中使用模块数据
+
+```
+示例：
+
+数据模块文件： todo.js
+
+let state = {
+    text: 'Hello World !',
+    list: [{
+        id: 0,
+        text: 'test0',
+    }, {
+        id: 1,
+        text: 'test1',
+    }, {
+        id: 2,
+        text: 'test2',
+    }, {
+        id: 3,
+        text: 'test3',
+    }, {
+        id: 4,
+        text: 'test4',
+    }]
+}
+
+export default {
+    state,
+    getters: {},
+    mutations: {
+        changeText(state, newText) {
+            console.log('newText', newText)
+            state.text = newText
+        }
+    },
+    actions: {
+        changeText({
+            commit
+        }, e) {
+            commit('changeText', e.target.value)
+        },
+        alertForm() {
+            alert('弹出弹框！')
+        }
+    },
+    namespaced: true
+}
+
+vue模板文件：
+
+<style lang="less" scoped>
+</style>
+<template>
+    <div>
+        <h1 v-on:click="alertForm">{{text}}</h1>
+        <input type="text" :value="text" @input="changeText">
+        <ul>
+            <li v-for="li in list" :key="li.id">{{li.text}}</li>
+        </ul>
+    </div>
+</template>
+<script>
+import { mapState, mapActions } from "vuex";
+export default {
+  computed: mapState({
+    list: state => state.todo.list,
+    text: state => state.todo.text
+  }),
+  methods: mapActions("todo", ["alertForm", "changeText"])
+};
+</script>
+
+主函数文件：
+
+import Vue from 'vue'
+import Vuex, { Store } from 'vuex'
+import app from './app.vue'
+import todo from './todo'
+
+Vue.use(Vuex)
+
+let store = new Store({
+    modules: {
+      todo
+    }
+})
+
+new Vue({
+    store,
+    render: h => h(app)
+}).$mount('#app')
+```
 
 ### 插槽
 
